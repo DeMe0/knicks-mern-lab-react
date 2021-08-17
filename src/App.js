@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { Route, Link, Switch } from "react-router-dom";
-import Display from "./Display";
+import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
+import Display from "./components/Display";
 // import Form from "./Form";
 
 function App() {
@@ -15,45 +15,45 @@ function App() {
     img: "",
   };
 
-  const selectedPlayer, setSelectedPlayer] = useState(emptyPlayer)
+  const [selectedPlayer, setSelectedPlayer] = useState(emptyPlayer);
 
   const getPlayers = () => {
     fetch(url + "/knicks")
-    .then((response) => response.json())
-    .then((data) => setPlayers(data))
-  }
+      .then((response) => response.json())
+      .then((data) => setPlayers(data));
+  };
 
-  useEffect(() => {getPlayers()}, [])
+  useEffect(() => {
+    getPlayers();
+  }, []);
 
   const handleCreate = (newPlayer) => {
     fetch(url + "/knicks", {
       method: "post",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(newPlayer)
-    })
-    .then(() => {
-      getPlayers()
-    })
-  }
+      body: JSON.stringify(newPlayer),
+    }).then(() => {
+      getPlayers();
+    });
+  };
 
   const handleUpdate = (player) => {
-    fetch(url + "/knicks/"+ player._id, {
+    fetch(url + "/knicks/" + player._id, {
       method: "put",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(player)
-    })
-    .then(() => {
-      getPlayers()
-    })
-  }
+      body: JSON.stringify(player),
+    }).then(() => {
+      getPlayers();
+    });
+  };
 
   const selectPlayer = (player) => {
-    setSelectedPlayer(player)
-  }
+    setSelectedPlayer(player);
+  };
 
   const deletePlayer = (player) => {
     fetch(url + "/knicks/" + player._id, {
@@ -65,7 +65,7 @@ function App() {
   };
 
   return (
-<div className="App">
+    <div className="App">
       <h1>BUILD YOUR ALL TIME KNICKS TEAM</h1>
       <hr />
       <Link to="/create">
@@ -73,7 +73,18 @@ function App() {
       </Link>
       <main>
         <Switch>
-          <Route exact path="/" render={(rp) => <Display {...rp} players={players} selectPlayer={selectPlayer} deletePlayer={deletePlayer}/>} />
+          <Route
+            exact
+            path="/"
+            render={(rp) => (
+              <Display
+                {...rp}
+                players={players}
+                selectPlayer={selectPlayer}
+                deletePlayer={deletePlayer}
+              />
+            )}
+          />
           <Route
             exact
             path="/create"
@@ -81,13 +92,18 @@ function App() {
             //   <Form {...rp} label="create" player={emptyPlayer} handleSubmit={handleCreate} />
             // )}
           />
-          <Route
+          {/* <Route
             exact
             path="/edit"
             render={(rp) => (
-              <Form {...rp} label="update" dog={selectedDog} handleSubmit={handleUpdate} />
+              <Form
+                {...rp}
+                label="update"
+                dog={selectedDog}
+                handleSubmit={handleUpdate}
+              />
             )}
-          />
+          /> */}
         </Switch>
       </main>
     </div>
