@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
+import { Route, Link, Switch } from "react-router-dom";
 import Display from "./components/Display";
-// import Form from "./Form";
+import Form from "./components/Form";
 
 function App() {
-  const url = "https://knicks-api-628-ajd.herokuapp.com/";
+  const url = "https://knicks-api-628-ajd.herokuapp.com";
 
   const [players, setPlayers] = useState([]);
 
@@ -88,22 +88,27 @@ function App() {
           <Route
             exact
             path="/create"
-            // render={(rp) => (
-            //   <Form {...rp} label="create" player={emptyPlayer} handleSubmit={handleCreate} />
-            // )}
+            render={(rp) => (
+              <Form
+                {...rp}
+                label="create"
+                player={emptyPlayer}
+                handleSubmit={handleCreate}
+              />
+            )}
           />
-          {/* <Route
+          <Route
             exact
             path="/edit"
             render={(rp) => (
               <Form
                 {...rp}
                 label="update"
-                dog={selectedDog}
+                dog={selectedPlayer}
                 handleSubmit={handleUpdate}
               />
             )}
-          /> */}
+          />
         </Switch>
       </main>
     </div>
